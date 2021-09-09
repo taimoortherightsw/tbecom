@@ -156,14 +156,14 @@
 <!-- custom UI behavior -->
 <script>
 
-	var resetData = {
-		areas: [],
-		enabled: true,
-	};
+	// var resetData = {
+	// 	areas: [],
+	// 	enabled: true,
+	// };
 
-	EcwidApp.setAppPublicConfig(JSON.stringify(resetData), function(savedData){
-		console.log(savedData + ' has been saved.');
-	});
+	// EcwidApp.setAppPublicConfig(JSON.stringify(resetData), function(savedData){
+	// 	console.log(savedData + ' has been saved.');
+	// });
 
 	initApplication();
 
@@ -213,12 +213,19 @@
 		let _self = $(this);
 		let status = _self.attr('checked') ? true : false;
 
-		if (status) _self.removeAttr('checked');
-		else _self.attr('checked', 'checked');
+		let message;
+
+		if (status) {
+			_self.removeAttr('checked');
+			message = 'Application has been disabled.';
+		} else {
+			_self.attr('checked', 'checked');
+			message = 'Application has been enabled.';
+		}
 
 		saveApplicationData('status', status);
 
-		toastMessage('success', 'Application has been ' + status ? 'enabled' : 'disabled' + '.');
+		toastMessage('success', message);
 	});
 
 	$(document).on('click', '.tb-add-btn', function() {
