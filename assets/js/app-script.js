@@ -25,7 +25,7 @@ function saveApplicationData(type, value) {
 		let applicationData = JSON.parse(allData);
 
 		if (type == 'status') {
-			applicationData.enabled = status;
+			applicationData.enabled = value;
 		}
 
 		if (type == 'area') {
