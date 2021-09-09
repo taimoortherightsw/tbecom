@@ -7,6 +7,7 @@ EcwidApp.init({
 function initApplication() {
 	EcwidApp.getAppStorage('public', function(allData) {
 		let applicationData = JSON.parse(allData);
+		console.log(applicationData);
 
 		if (applicationData.enabled) {
 			$('#app-status').attr('checked', 'checked');
@@ -23,10 +24,13 @@ function initApplication() {
 function saveApplicationData(type, value) {
 	EcwidApp.getAppStorage('public', function(allData) {
 		let applicationData = JSON.parse(allData);
+		console.log(applicationData);
 
 		if (type == 'status') {
 			applicationData.enabled = value;
 		}
+		
+		console.log(type, value, applicationData);
 
 		if (type == 'area') {
 			applicationData.areas.push(value);
