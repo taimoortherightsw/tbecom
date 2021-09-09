@@ -1,0 +1,404 @@
+<!-- Ecwid app SDK -->
+<script src="https://d35z3p2poghz10.cloudfront.net/ecwid-sdk/js/1.2.6/ecwid-app.js"></script>
+
+<!-- Ecwid UI CSS SDK -->
+<link rel="stylesheet" href="https://d35z3p2poghz10.cloudfront.net/ecwid-sdk/css/1.3.11/ecwid-app-ui.css"/>
+
+<!-- custom app styles -->
+<link rel="stylesheet" href="assets/css/app-style.css"/>
+
+<div class="notify-stack tb-notifications"></div>
+
+<div class="main-overlay" id="tb-add-modal" style="display: none;">
+   <div class="main-popup main-popup_center main-popup_animation">
+      <div class="main-popup__container">
+         <div class="main-popup__subcontainer">
+            <h3 class="main-popup__title"> 
+            	<span class="gwt-InlineHTML">
+            		Add New <span class="ucwords-name">City</span> <span class="for-city"></span>
+            	</span>
+            </h3>
+            <br>
+            <div class="fieldsets-batch">
+				<div class="fieldset">
+					<div class="field field--large">
+						<label class="field__label">Provide name of the <span class="lowercase-name">city</span></label>
+						<input type="text" class="field__input" maxlength="64">
+						<div class="field__placeholder">Provide name of the <span class="lowercase-name">city</span></div>
+					</div>
+				</div>
+			</div>
+            <div class="main-popup__buttons">
+            	<button type="button" class="btn btn-success btn-medium tb-confirm-btn">Let's Save</button>
+            	<button type="button" class="btn btn-default btn-medium tb-cancel-btn">Cancel</button>
+            </div>
+            <div class="main-popup__footer-text" aria-hidden="true" style="display: none;"></div>
+         </div>
+      </div>
+   </div>
+</div>
+
+<div class="main-overlay" id="tb-delete-modal" style="display: none;">
+   <div class="main-popup main-popup_center main-popup_animation">
+      <div class="main-popup__container">
+ 		<div class="main-popup__subcontainer">
+         	<div class="main-popup__logo">
+         		<svg class="imp" width="70" height="70" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 70">
+         			<path d="M45 14.68c-.83 0-1.5-.67-1.5-1.5V9.69c0-.38-.36-.69-.8-.69H27.5c-.44 0-.8.31-.8.69v3.49c0 .83-.67 1.5-1.5 1.5s-1.5-.67-1.5-1.5V9.69C23.7 7.66 25.41 6 27.5 
+         				6h15.2c2.09 0 3.8 1.66 3.8 3.69v3.49c0 .82-.67 1.5-1.5 1.5zM47.5 63H24.37c-4.34 0-7.87-3.68-7.87-8.2l-2-35.21c-.05-.83.58-1.54 1.41-1.58.84-.06 1.54.58 1.58 
+         				1.41l2 35.3c0 2.95 2.19 5.29 4.87 5.29H47.5c2.68 0 4.87-2.33 4.87-5.2l2.13-35.39c.05-.83.73-1.46 1.58-1.41.83.05 1.46.76 1.41 1.58l-2.13 35.3c.01 4.43-3.52 
+         				8.11-7.86 8.11z"></path>
+     				<path d="M58.5 15h-46c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5h46c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5zM36 52c-.83 0-1.5-.67-1.5-1.5v-27c0-.83.67-1.5 1.5-1.5s1.5.67 
+     					1.5 1.5v27c0 .83-.67 1.5-1.5 1.5zM27 52c-.83 0-1.5-.67-1.5-1.5v-27c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v27c0 .83-.67 1.5-1.5 1.5zM45 52c-.83 
+     					0-1.5-.67-1.5-1.5v-27c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v27c0 .83-.67 1.5-1.5 1.5z"></path>
+ 				</svg>
+			</div>
+            <h2 class="main-popup__title"> 
+            	<span class="gwt-InlineHTML error">Delete this record?</span>
+            </h2>
+            <p>Are you sure you want to delete this record? <br> You will not be able to undo this action.</p>
+            <div class="main-popup__buttons">
+            	<button type="button" class="btn btn-primary btn-medium tb-confirm-btn">Yes, Delete it!</button>
+            	<button type="button" class="btn btn-default btn-medium tb-cancel-btn">Cancel</button>
+            </div>
+            <div class="main-popup__footer-text" aria-hidden="true" style="display: none;"></div>
+         </div>
+      </div>
+   </div>
+</div>
+
+<div class="a-card--normal" style="padding-bottom: 40px; background: #eceef0;">
+	<div class="a-card__paddings">
+		<div class="payment-method">
+
+			<!-- header -->
+			<div class="payment-method__header">
+				<div class="payment-method__logo tb__logo">
+					<img src="assets/img/tbecom-logo.png" alt="TB E-Com">
+				</div>
+				<div class="payment-method__credit-cards">
+					<label class="checkbox">
+						<input type="checkbox" id="app-status">
+						<div data-on="enabled" data-off="disabled"><div></div></div>
+					</label>
+				</div>
+			</div>
+
+			<!-- title -->
+			<div class="payment-method__title">TBEcom Custom Address</div>
+
+			<!-- content -->
+			<div class="payment-method__content">
+				<div class="form-area">
+					<div class="form-area__content">
+						<p>This application can be used to do customisations on store front. In order to start using 
+						the app, simply enable it using the switch at the top. Then, you can specify your custom 
+						information according to your need in the interface below. The specified information will 
+						then be used during the checkout process to fill in the custom address fields. So that, 
+						customer may select desired value to make the process easier for everyone. </p>
+					</div>
+
+					<div class="columned">
+
+						<div class="columned__item">
+							<div class="a-card a-card--compact">
+								<div class="a-card__paddings" id="tb-cities-container">
+									<h4 class="muted">List of cities</h4>
+
+									<div class="list-element list-element--compact list-element--inline-mode" style="border-top: none;">
+										<div class="list-element__content">
+											<div class="list-element__info">
+												<div class="list-element__data-row">
+													<span class="text-default">
+														<h3>Cities</h3>
+													</span>
+												</div>
+											</div>
+											<div class="list-element__actions">
+												<div class="list-element__buttons-set">
+													<div class="list-element__button-wrapper">
+														<button type="button" class="btn btn-primary btn-small tb-add-btn" data-type="city">
+															<span class="svg-icon">
+																<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" focusable="false">
+																	<path d="M6.712 5.314H11v1.39H6.712V11H5.267V6.706H1V5.314h4.267V1h1.446v4.314z"></path>
+																</svg>
+															</span>
+															New
+														</button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<!-- cities list goes here -->
+
+								</div>
+							</div>
+						</div>
+
+						<div class="columned__item">
+							<div class="a-card a-card--compact">
+								<div class="a-card__paddings" id="tb-areas-container">
+									<h4 class="muted">List of areas</h4>
+
+									<!-- areas list goes here -->
+
+								</div>
+							</div>
+						</div>
+						
+						<div class="columned__item">
+							<div class="a-card a-card--compact">
+								<div class="a-card__paddings" id="tb-branches-container">
+									<h4 class="muted">List of branches</h4>
+
+									<!-- branches list goes here -->
+
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<!-- load jQuery -->
+<script type="text/javascript" src="assets/js/jquery-3.6.0.min.js"></script>
+<!-- custom app script for control panel operations -->
+<script src='assets/js/app-script.js'></script>
+
+<!-- Ecwid UI JS SDK -->
+<script src="https://d35z3p2poghz10.cloudfront.net/ecwid-sdk/css/1.3.11/ecwid-app-ui.min.js"></script>
+
+<!-- custom UI behavior -->
+<script>
+
+	// var resetData = {
+	// 	cities: [],
+	// 	areas: {},
+	// 	branches: {},
+	// 	enabled: true,
+	// };
+
+	// EcwidApp.setAppPublicConfig(JSON.stringify(resetData), function(savedData){
+	// 	console.log(savedData + ' has been saved.');
+	// });
+
+	initApplication();
+
+	function fireDialog(parms = {id, confirm, cancel}) {
+		let modal = $('#' + parms.id);
+
+		modal.show();
+
+		$(modal).off('click', '.tb-confirm-btn');
+		$(modal).off('click', '.tb-cancel-btn');
+
+		$(modal).on('click', '.tb-confirm-btn', function() {			
+			let _self = $(this);
+			let cancelBtn = _self.closest('.main-popup__buttons').find('.tb-cancel-btn');
+
+			_self.addClass('btn-loading');
+			cancelBtn.attr('disabled', 'disabled');
+
+			(async () => {
+				let result = await parms.confirm();
+
+				_self.removeClass('btn-loading');
+				cancelBtn.removeAttr('disabled');
+
+				if (result == 'success') {
+					_self.closest('.main-overlay').fadeOut(500, function() {
+						modal.find('input').val('').closest('.field').removeClass('field--filled');
+					});
+				}
+			})();
+		});
+
+		$(modal).on('click', '.tb-cancel-btn', function() {
+			let _self = $(this);
+
+			(async () => {
+				let result = await parms.cancel();
+
+				_self.closest('.main-overlay').fadeOut(500, function() {
+					modal.find('input').val('').closest('.field').removeClass('field--filled');
+				});
+			})();
+		});
+	}
+
+	$(document).on('change', '#app-status', function() {
+		let _self = $(this);
+
+		if (_self.attr('checked')) {
+			_self.removeAttr('checked');
+			changeAppStatus(false);
+		} else {
+			_self.attr('checked', 'checked');
+			changeAppStatus(true);
+		}
+
+		toastMessage('success', 'Application status has been changed.');
+	});
+
+	$(document).on('click', '.tb-add-btn', function() {
+		let _self = $(this);
+		let modal = $('#tb-add-modal');
+
+		type = _self.data('type').toLowerCase();
+		city = _self.data('city');
+
+		modal.find('span.lowercase-name').text(type);
+		modal.find('span.ucwords-name').text(ucWords(type));
+
+		if (typeof city !== 'undefined') {
+			modal.find('span.for-city').html('<i>for</i> ' + city);
+		} else {
+			modal.find('span.for-city').html('');
+		}
+
+		fireDialog({
+			id: 'tb-add-modal', 
+			confirm: function() {
+				return new Promise((resolve, reject) => {
+					try {
+						let value = modal.find('input').val();
+
+						if (value) {
+							saveAddressData(type, value, city);
+							toastMessage('success', ucWords(type) + ' has been added successfully.');
+
+							resolve('success');
+						} else {
+							toastMessage('error', 'Please, provide a value.');
+							resolve('error');
+						}
+					} catch(error) {
+						toastMessage('error', error);
+						resolve('error');
+					}
+
+				});
+			}, 
+			cancel: function() {}
+		});
+	});
+
+	$(document).on('click', '.tb-delete-btn', function() {
+		let _self = $(this);
+
+		let type = _self.data('type');
+		let value = _self.data('value');
+		let city = _self.data('city');
+		
+		fireDialog({
+			id: 'tb-delete-modal', 
+			confirm: function() {
+				return new Promise((resolve, reject) => {
+					try {
+						if (type == 'city') {
+							deleteAddressData('city', value);
+
+							$('span[data-areas-for="'+value+'"]').remove();
+							$('span[data-branches-for="'+value+'"]').remove();
+						}
+
+						else {
+							deleteAddressData(type, value, city);
+						}
+
+						_self.closest('.list-element').remove();
+						toastMessage('success', 'Item has been deleted successfully.');
+
+						resolve('success');
+					} catch (error) {
+						toastMessage('error', error);
+						resolve('error');
+					}
+
+				});
+			}, 
+			cancel: function() {}
+		});
+	});
+
+	function ucWords(string) {
+		string = string.toLowerCase().replace(/^[\u00C0-\u1FFF\u2C00-\uD7FF\w]|\s[\u00C0-\u1FFF\u2C00-\uD7FF\w]/g, function(letter) {
+		    return letter.toUpperCase();
+		});
+
+		return string;
+	}
+</script>
+
+<!-- helper for toast messages -->
+<script>
+	var notifyStack = 0;
+
+	$(function() {
+		$(document).on('click', '.tb-notifications .notify__close', function() {
+			var notify = $(this).closest('.notify');
+			notify.fadeOut(100, function() {
+				notify.remove();
+			});
+		});
+	});
+
+	function toastMessage(type = 'success', message = 'Your request has been processed', timeout = 3000) {
+
+		notifyStack += 1;
+
+		var className = type=='success' ? 'notify--success' : 'notify--error';
+
+		var notifyIcon = `
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 70">
+				<path d="M34.5 67h-.13c-8.68-.03-16.83-3.45-22.94-9.61C5.32 51.23 1.97 43.06 2 34.38 2.07 16.52 16.65 2 34.5 2h.13c8.68.03 16.83 3.45 22.94 
+				9.61 6.12 6.16 9.46 14.34 9.43 23.02C66.93 52.48 52.35 67 34.5 67zm0-62C18.3 5 5.06 18.18 5 34.39c-.03 7.88 3.01 15.3 8.56 20.89 5.55 5.59 
+				12.95 8.69 20.83 8.72h.12c16.2 0 29.44-13.18 29.5-29.39.03-7.88-3.01-15.3-8.56-20.89C49.89 8.13 42.49 5.03 34.61 5h-.11z"></path>
+				<path d="M32.17 46.67l-10.7-10.08c-.6-.57-.63-1.52-.06-2.12.57-.6 1.52-.63 2.12-.06l8.41 7.92 14.42-16.81c.54-.63 1.49-.7 2.12-.16.63.54.7 
+				1.49.16 2.12L32.17 46.67z"></path>
+			</svg>
+		`;
+
+		if (type != 'success') {
+			notifyIcon = `
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 70">
+					<path d="M34.5 67C16.58 67 2 52.42 2 34.5S16.58 2 34.5 2 67 16.58 67 34.5 52.42 67 34.5 67zm0-62C18.23 5 5 18.23 5 34.5S18.23 64 34.5 64 
+					64 50.77 64 34.5 50.77 5 34.5 5z"></path>
+					<path d="M34.5 49c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5zM35.5 38.57h-2l-1-14c0-1.17.89-2.07 
+					2-2.07s2 .9 2 2l-1 14.07z"></path>
+				</svg>
+			`;
+		}
+
+		$('.tb-notifications').append(`
+			<div class="notify ${className} notify--show tb-notify--${notifyStack}">
+				<div class="notify__content">
+					<div class="notify__icon">${notifyIcon}</div>
+					<div class="notify__title">${message}</div>
+					<div class="notify__close">
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+							<path d="M15.6 15.5c-.53.53-1.38.53-1.91 0L8.05 9.87 2.31 15.6c-.53.53-1.38.53-1.91 0s-.53-1.38 0-1.9l5.65-5.64L.4 2.4C-.13 1.87-.13 
+							1.02.4.49s1.38-.53 1.91 0l5.64 5.63L13.69.39c.53-.53 1.38-.53 1.91 0s.53 1.38 0 1.91L9.94 7.94l5.66 5.65c.52.53.52 1.38 0 
+							1.91z"></path>
+						</svg>
+					</div>
+				</div>
+			</div>
+		`);
+
+		var notify = $('.tb-notify--' + notifyStack);
+
+		setTimeout(function() {
+			notify.fadeOut(300, function() {
+				notify.remove();
+			});
+		}, timeout);
+	}
+</script>
