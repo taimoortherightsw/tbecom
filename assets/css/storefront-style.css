@@ -1,15 +1,3 @@
-body {
-	background: #eceef0;
-}
-
-svg.imp {
-	fill: #fd3826 !important;
-}
-
-#ob-add-modal > .main-popup {
-	height: 500px !important;
-}
-
 .tb__logo {
 	height: 72px !important;
 	margin-right: 40px !important;
