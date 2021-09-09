@@ -18,3 +18,7 @@ svg.imp {
 .tb__logo img {
 	height: 72px !important;
 }
+
+.tb-card__paddings {
+	padding-top: 0px !important;
+}
