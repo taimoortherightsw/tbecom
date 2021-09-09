@@ -85,7 +85,7 @@ EcwidApp.getAppStorage('installed', function(value) {
 	if (value == null) {
 		var initialConfig = {
 			public: {
-				areas: {},
+				areas: [],
 				enabled: true,
 			},
 			private: {

@@ -156,14 +156,14 @@
 <!-- custom UI behavior -->
 <script>
 
-	// var resetData = {
-	// 	areas: {},
-	// 	enabled: true,
-	// };
+	var resetData = {
+		areas: [],
+		enabled: true,
+	};
 
-	// EcwidApp.setAppPublicConfig(JSON.stringify(resetData), function(savedData){
-	// 	console.log(savedData + ' has been saved.');
-	// });
+	EcwidApp.setAppPublicConfig(JSON.stringify(resetData), function(savedData){
+		console.log(savedData + ' has been saved.');
+	});
 
 	initApplication();
 
