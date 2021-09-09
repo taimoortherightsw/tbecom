@@ -6,196 +6,55 @@ EcwidApp.init({
 
 function initApplication() {
 	EcwidApp.getAppStorage('public', function(allData) {
+		let applicationData = JSON.parse(allData);
 
-		let addressData = JSON.parse(allData);
-		let city, area, branch;
-
-		for (key in addressData.cities) {
-			city = addressData.cities[key];
-			updateCityUI(city);
-
-			for (key2 in addressData.areas[city]) {
-				updateAreaUI(addressData.areas[city][key2], city);
-			}
-
-			for (key3 in addressData.branches[city]) {
-				updateBranchesUI(addressData.branches[city][key3], city);
-			}
-		}
-
-		if (addressData.enabled) {
+		if (applicationData.enabled) {
 			$('#app-status').attr('checked', 'checked');
 		} else {
 			$('#app-status').removeAttr('checked');
 		}
+
+		for (key in applicationData.areas) {
+			createAreaUI(applicationData.areas[key]);
+		}
 	});
 }
 
-function changeAppStatus(status) {
+function saveApplicationData(type, value) {
 	EcwidApp.getAppStorage('public', function(allData) {
+		let applicationData = JSON.parse(allData);
 
-		let addressData = JSON.parse(allData);
+		if (type == 'status') {
+			applicationData.enabled = status;
+		}
 
-		addressData.enabled = status;
+		if (type == 'area') {
+			applicationData.areas.push(value);
+			createAreaUI(value);
+		}
 
-		EcwidApp.setAppPublicConfig(JSON.stringify(addressData), function(savedData) {
-			console.log('Application enabled: ' + addressData.enabled);
+		EcwidApp.setAppPublicConfig(JSON.stringify(applicationData), function(savedData){
+			console.log(type + ' has been saved: ' + value);
 		});
 	});
 }
 
-function saveAddressData(type, value, city = null) {
+function deleteApplicationData(type, value) {
 	EcwidApp.getAppStorage('public', function(allData) {
+		let applicationData = JSON.parse(allData);
 
-		let addressData = JSON.parse(allData);
-
-		if (type == 'city') {
-			addressData.cities.push(value);
-			addressData.areas[value] = [];
-			addressData.branches[value] = [];
-
-			updateCityUI(value);
+		if (type == 'area') {
+			let index = applicationData.areas.indexOf(value);
+			if (index > -1) applicationData.areas.splice(index, 1);
 		}
 
-		if (type == 'area' && city != null) {
-			addressData.areas[city].push(value);
-
-			updateAreaUI(value, city);
-		}
-
-		if (type == 'branch' && city != null) {
-			addressData.branches[city].push(value);
-
-			updateBranchesUI(value, city);
-		}
-
-		EcwidApp.setAppPublicConfig(JSON.stringify(addressData), function(savedData){
-			console.log(type + ' has been saved.');
-		});
-	});
-}
-
-function deleteAddressData(type, value, city = null) {
-	EcwidApp.getAppStorage('public', function(allData) {
-
-		let addressData = JSON.parse(allData);
-
-		if (type == 'city') {
-			let index = addressData.cities.indexOf(value);
-			if (index > -1) addressData.cities.splice(index, 1);
-
-			delete addressData.areas[value];
-			delete addressData.branches[value];
-		}
-
-		if (type == 'area' && city != null) {
-			let index = addressData.areas[city].indexOf(value);
-			if (index > -1) addressData.areas[city].splice(index, 1);
-		}
-
-		if (type == 'branch' && city != null) {
-			let index = addressData.branches[city].indexOf(value);
-			if (index > -1) addressData.branches[city].splice(index, 1);
-		}
-
-		EcwidApp.setAppPublicConfig(JSON.stringify(addressData), function(savedData){
+		EcwidApp.setAppPublicConfig(JSON.stringify(applicationData), function(savedData){
 			console.log(type + ' has been removed.');
 		});
 	});
 }
 
-function updateCityUI(city) {
-	let cityTemplate = `
-		<div class="list-element list-element--has-hover list-element--compact list-element--inline-mode">
-			<div class="list-element__content">
-				<div class="list-element__info">
-					<div class="list-element__data-row">
-						<span class="text-default">
-							<b><span class="gwt-InlineLabel">${city}</span></b>
-						</span>
-					</div>
-				</div>
-				<div class="list-element__actions">
-					<div class="list-element__buttons-set">
-						<div class="list-element__button-wrapper">
-							<button type="button" class="btn btn-default btn-small ob-delete-btn" data-type="city" data-value="${city}">
-								Delete
-							</button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	`;
-
-	$('#ob-cities-container').append(cityTemplate);
-
-	let cityAreaTemplate = `
-		<span data-areas-for="${city}">
-			<div class="list-element list-element--compact list-element--inline-mode" style="border-top: none;">
-				<div class="list-element__content">
-					<div class="list-element__info">
-						<div class="list-element__data-row">
-							<span class="text-default">
-								<h3>${city}</h3>
-							</span>
-						</div>
-					</div>
-					<div class="list-element__actions">
-						<div class="list-element__buttons-set">
-							<div class="list-element__button-wrapper">
-								<button type="button" class="btn btn-primary btn-small ob-add-btn" data-type="area" data-city="${city}">
-									<span class="svg-icon">
-										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" focusable="false">
-											<path d="M6.712 5.314H11v1.39H6.712V11H5.267V6.706H1V5.314h4.267V1h1.446v4.314z"></path>
-										</svg>
-									</span>
-									New
-								</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</span>
-	`;
-
-	$('#ob-areas-container').append(cityAreaTemplate);
-
-	let cityBranchesTemplate = `
-		<span data-branches-for="${city}">
-			<div class="list-element list-element--compact list-element--inline-mode" style="border-top: none;">
-				<div class="list-element__content">
-					<div class="list-element__info">
-						<div class="list-element__data-row">
-							<span class="text-default">
-								<h3>${city}</h3>
-							</span>
-						</div>
-					</div>
-					<div class="list-element__actions">
-						<div class="list-element__buttons-set">
-							<div class="list-element__button-wrapper">
-								<button type="button" class="btn btn-primary btn-small ob-add-btn" data-type="branch" data-city="${city}">
-									<span class="svg-icon">
-										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" focusable="false">
-											<path d="M6.712 5.314H11v1.39H6.712V11H5.267V6.706H1V5.314h4.267V1h1.446v4.314z"></path>
-										</svg>
-									</span>
-									New
-								</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</span>
-	`;
-
-	$('#ob-branches-container').append(cityBranchesTemplate);
-}
-
-function updateAreaUI(area, city) {
+function createAreaUI(area) {
 	let areaTemplate = `
 		<div class="list-element list-element--has-hover list-element--compact list-element--inline-mode">
 			<div class="list-element__content">
@@ -209,7 +68,7 @@ function updateAreaUI(area, city) {
 				<div class="list-element__actions">
 					<div class="list-element__buttons-set">
 						<div class="list-element__button-wrapper">
-							<button type="button" class="btn btn-default btn-small ob-delete-btn" data-type="area" data-value="${area}" data-city="${city}">
+							<button type="button" class="btn btn-default btn-small ob-delete-btn" data-type="area" data-value="${area}">
 								Delete
 							</button>
 						</div>
@@ -219,43 +78,14 @@ function updateAreaUI(area, city) {
 		</div>
 	`;
 
-	$('span[data-areas-for="' + city +'"]').append(areaTemplate);
-}
-
-function updateBranchesUI(branch, city) {
-	let branchTemplate = `
-		<div class="list-element list-element--has-hover list-element--compact list-element--inline-mode">
-			<div class="list-element__content">
-				<div class="list-element__info">
-					<div class="list-element__data-row">
-						<span class="text-default">
-							<b><span class="gwt-InlineLabel">${branch}</span></b>
-						</span>
-					</div>
-				</div>
-				<div class="list-element__actions">
-					<div class="list-element__buttons-set">
-						<div class="list-element__button-wrapper">
-							<button type="button" class="btn btn-default btn-small ob-delete-btn" data-type="branch" data-value="${branch}" data-city="${city}">
-								Delete
-							</button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	`;
-
-	$('span[data-branches-for="' + city +'"]').append(branchTemplate);
+	$('#tb-areas-container').append(areaTemplate);
 }
 
 EcwidApp.getAppStorage('installed', function(value) {
 	if (value == null) {
 		var initialConfig = {
 			public: {
-				cities: [],
 				areas: {},
-				branches: {},
 				enabled: true,
 			},
 			private: {

@@ -15,16 +15,16 @@
          <div class="main-popup__subcontainer">
             <h3 class="main-popup__title"> 
             	<span class="gwt-InlineHTML">
-            		Add New <span class="ucwords-name">City</span> <span class="for-city"></span>
+            		Add New Area
             	</span>
             </h3>
             <br>
             <div class="fieldsets-batch">
 				<div class="fieldset">
 					<div class="field field--large">
-						<label class="field__label">Provide name of the <span class="lowercase-name">city</span></label>
+						<label class="field__label">Provide name of the area</label>
 						<input type="text" class="field__input" maxlength="64">
-						<div class="field__placeholder">Provide name of the <span class="lowercase-name">city</span></div>
+						<div class="field__placeholder">Provide name of the area</div>
 					</div>
 				</div>
 			</div>
@@ -102,22 +102,22 @@
 
 						<div class="columned__item">
 							<div class="a-card a-card--compact">
-								<div class="a-card__paddings" id="tb-cities-container">
-									<h4 class="muted">List of cities</h4>
+								<div class="a-card__paddings" id="tb-areas-container">
+									<h4 class="muted">List of areas</h4>
 
 									<div class="list-element list-element--compact list-element--inline-mode" style="border-top: none;">
 										<div class="list-element__content">
 											<div class="list-element__info">
 												<div class="list-element__data-row">
 													<span class="text-default">
-														<h3>Cities</h3>
+														<h3>Areas</h3>
 													</span>
 												</div>
 											</div>
 											<div class="list-element__actions">
 												<div class="list-element__buttons-set">
 													<div class="list-element__button-wrapper">
-														<button type="button" class="btn btn-primary btn-small tb-add-btn" data-type="city">
+														<button type="button" class="btn btn-primary btn-small tb-add-btn" data-type="area">
 															<span class="svg-icon">
 																<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" focusable="false">
 																	<path d="M6.712 5.314H11v1.39H6.712V11H5.267V6.706H1V5.314h4.267V1h1.446v4.314z"></path>
@@ -131,29 +131,7 @@
 										</div>
 									</div>
 
-									<!-- cities list goes here -->
-
-								</div>
-							</div>
-						</div>
-
-						<div class="columned__item">
-							<div class="a-card a-card--compact">
-								<div class="a-card__paddings" id="tb-areas-container">
-									<h4 class="muted">List of areas</h4>
-
 									<!-- areas list goes here -->
-
-								</div>
-							</div>
-						</div>
-						
-						<div class="columned__item">
-							<div class="a-card a-card--compact">
-								<div class="a-card__paddings" id="tb-branches-container">
-									<h4 class="muted">List of branches</h4>
-
-									<!-- branches list goes here -->
 
 								</div>
 							</div>
@@ -179,9 +157,7 @@
 <script>
 
 	// var resetData = {
-	// 	cities: [],
 	// 	areas: {},
-	// 	branches: {},
 	// 	enabled: true,
 	// };
 
@@ -235,33 +211,20 @@
 
 	$(document).on('change', '#app-status', function() {
 		let _self = $(this);
+		let status = _self.attr('checked') ? true : false;
 
-		if (_self.attr('checked')) {
-			_self.removeAttr('checked');
-			changeAppStatus(false);
-		} else {
-			_self.attr('checked', 'checked');
-			changeAppStatus(true);
-		}
+		if (status) _self.removeAttr('checked');
+		else _self.attr('checked', 'checked');
 
-		toastMessage('success', 'Application status has been changed.');
+		saveApplicationData('status', status);
+
+		toastMessage('success', 'Application has been ' + status ? 'enabled' : 'disabled' + '.');
 	});
 
 	$(document).on('click', '.tb-add-btn', function() {
 		let _self = $(this);
+		let type = _self.data('type');
 		let modal = $('#tb-add-modal');
-
-		type = _self.data('type').toLowerCase();
-		city = _self.data('city');
-
-		modal.find('span.lowercase-name').text(type);
-		modal.find('span.ucwords-name').text(ucWords(type));
-
-		if (typeof city !== 'undefined') {
-			modal.find('span.for-city').html('<i>for</i> ' + city);
-		} else {
-			modal.find('span.for-city').html('');
-		}
 
 		fireDialog({
 			id: 'tb-add-modal', 
@@ -271,7 +234,7 @@
 						let value = modal.find('input').val();
 
 						if (value) {
-							saveAddressData(type, value, city);
+							saveApplicationData(type, value);
 							toastMessage('success', ucWords(type) + ' has been added successfully.');
 
 							resolve('success');
@@ -283,7 +246,6 @@
 						toastMessage('error', error);
 						resolve('error');
 					}
-
 				});
 			}, 
 			cancel: function() {}
@@ -293,35 +255,24 @@
 	$(document).on('click', '.tb-delete-btn', function() {
 		let _self = $(this);
 
-		let type = _self.data('type');
 		let value = _self.data('value');
-		let city = _self.data('city');
+		let type = _self.data('type');
 		
 		fireDialog({
 			id: 'tb-delete-modal', 
 			confirm: function() {
 				return new Promise((resolve, reject) => {
 					try {
-						if (type == 'city') {
-							deleteAddressData('city', value);
-
-							$('span[data-areas-for="'+value+'"]').remove();
-							$('span[data-branches-for="'+value+'"]').remove();
-						}
-
-						else {
-							deleteAddressData(type, value, city);
-						}
-
+						deleteApplicationData(type, value);
 						_self.closest('.list-element').remove();
-						toastMessage('success', 'Item has been deleted successfully.');
+
+						toastMessage('success', ucWords(type) + ' has been deleted successfully.');
 
 						resolve('success');
 					} catch (error) {
 						toastMessage('error', error);
 						resolve('error');
 					}
-
 				});
 			}, 
 			cancel: function() {}
