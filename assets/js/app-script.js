@@ -68,7 +68,7 @@ function createAreaUI(area) {
 				<div class="list-element__actions">
 					<div class="list-element__buttons-set">
 						<div class="list-element__button-wrapper">
-							<button type="button" class="btn btn-default btn-small ob-delete-btn" data-type="area" data-value="${area}">
+							<button type="button" class="btn btn-default btn-small tb-delete-btn" data-type="area" data-value="${area}">
 								Delete
 							</button>
 						</div>
