@@ -2,23 +2,19 @@ body {
 	background: #eceef0;
 }
 
-svg.imp {
-	fill: #fd3826 !important;
-}
-
-#tb-add-modal > .main-popup {
+#ta__add-modal > .main-popup {
 	height: 500px !important;
 }
 
-.tb__logo {
+.ta__logo {
 	height: 72px !important;
 	margin-right: 0px !important;
 }
 
-.tb__logo img {
+.ta__logo img {
 	height: 72px !important;
 }
 
-.tb-card__paddings {
+.ta__card-paddings {
 	padding-top: 0px !important;
 }
