@@ -51,8 +51,15 @@ let AppStorage = {
 			if (config.enabled) $('#ta__app-status').attr('checked', 'checked');
 			else $('#ta__app-status').removeAttr('checked');
 
+			let governorate;
+
 			for (key in config.governorates) {
-				_self.createGovernorateUI(config.governorates[key]);
+				governorate = config.governorates[key];
+				_self.createGovernorateUI(governorate);
+
+				for (key2 in config.areas[governorate]) {
+					_self.createAreaUI(governorate, config.areas[governorate][key2]);
+				}
 			}
 		});
 	},
