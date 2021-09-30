@@ -200,6 +200,6 @@ let AppStorage = {
 			</div>
 		`;
 
-		$('span[data-areas-for="' + governorate +'"]').append(areaTemplate);
+		$('#ta__areas-container').find('span[data-areas-for="' + governorate +'"]').append(areaTemplate);
 	}
 }
