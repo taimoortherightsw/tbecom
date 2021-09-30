@@ -30,7 +30,6 @@ EcwidApp.getAppStorage('installed', function (config) {
 	}
 });
 
-/*
 let AppStorage = {
 	reset: function () {
 		var config = {
@@ -54,12 +53,12 @@ let AppStorage = {
 
 			let governorate;
 
-			for (key in config.governorates) {
+			for (let key in config.governorates) {
 				governorate = config.governorates[key];
 				_self.createGovernorateUI(governorate);
 
-				for (key2 in config.areas[governorate]) {
-					_self.createAreaUI(governorate, config.areas[governorate]);
+				for (let key2 in config.areas[governorate]) {
+					_self.createAreaUI(governorate, config.areas[governorate][key2]);
 				}
 			}
 		});
@@ -204,4 +203,3 @@ let AppStorage = {
 		$('span[data-areas-for="' + governorate +'"]').append(areaTemplate);
 	}
 }
-*/
