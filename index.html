@@ -208,11 +208,7 @@
 						let value = modal.find('input').val();
 
 						if (value) {
-							if (typeof governorate !== 'undefined') {
-								AppStorage.save(type, value, governorate);
-							} else {
-								AppStorage.save(type, value, null);
-							}
+							AppStorage.save(type, value, governorate);
 
 							AppHelpers.toast('success', AppHelpers.ucWords(type) + ' has been added successfully.');
 							resolve('success');
@@ -242,14 +238,10 @@
 			confirm: function () {
 				return new Promise((resolve, reject) => {
 					try {
-						if (typeof governorate !== 'undefined') {
-							AppStorage.delete(type, value, governorate);
-							$('span[data-areas-for="'+value+'"]').remove();
-						} else {
-							AppStorage.delete(type, value);
-						}
-						
+						AppStorage.delete(type, value, governorate);
 						_self.closest('.list-element').remove();
+
+						if (type == 'governorate') $('span[data-areas-for="'+value+'"]').remove();
 
 						AppHelpers.toast('success', AppHelpers.ucWords(type) + ' has been deleted successfully.');
 						resolve('success');
