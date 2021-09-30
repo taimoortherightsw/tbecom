@@ -188,19 +188,8 @@
 
 	$(document).on('click', '.ta__add-btn', function () {
 		let _self = $(this);
-
-		let type = _self.data('type').toLowerCase();
-		let governorate = _self.data('governorate');
-
+		let type = _self.data('type');
 		let modal = $('#ta__add-modal');
-		modal.find('span.ta__lowercase-name').text(type);
-		modal.find('span.ta__ucwords-name').text(AppHelpers.ucWords(type));
-
-		if (typeof governorate !== 'undefined') {
-			modal.find('span.ta__for-governorate').html('<i>for</i> ' + governorate);
-		} else {
-			modal.find('span.ta__for-governorate').html('');
-		}
 
 		AppHelpers.fireDialog({
 			id: 'ta__add-modal',
@@ -210,7 +199,7 @@
 						let value = modal.find('input').val();
 
 						if (value) {
-							AppStorage.save(type, value, governorate);
+							AppStorage.save(type, value);
 
 							AppHelpers.toast('success', AppHelpers.ucWords(type) + ' has been added successfully.');
 							resolve('success');
@@ -231,19 +220,16 @@
 	$(document).on('click', '.ta__delete-btn', function () {
 		let _self = $(this);
 
-		let value = _self.data('value').toLowerCase();
+		let value = _self.data('value');
 		let type = _self.data('type');
-		let governorate = _self.data('governorate');
 
 		AppHelpers.fireDialog({
 			id: 'ta__delete-modal',
 			confirm: function () {
 				return new Promise((resolve, reject) => {
 					try {
-						AppStorage.delete(type, value, governorate);
+						AppStorage.delete(type, value);
 						_self.closest('.list-element').remove();
-
-						if (type == 'governorate') $('span[data-areas-for="'+value+'"]').remove();
 
 						AppHelpers.toast('success', AppHelpers.ucWords(type) + ' has been deleted successfully.');
 						resolve('success');
