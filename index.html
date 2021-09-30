@@ -167,11 +167,11 @@
 
 	$(document).on('change', '#ta__app-status', function () {
 		let _self = $(this);
-		let status = _self.attr('checked') ? false : true;
+		let isEnabled = _self.attr('checked') ? true : false;
 
 		let message;
 
-		if (status) {
+		if (isEnabled) {
 			_self.removeAttr('checked');
 			message = 'Application has been disabled.';
 		} else {
@@ -179,8 +179,7 @@
 			message = 'Application has been enabled.';
 		}
 
-		AppStorage.save('status', status);
-
+		AppStorage.save('status', isEnabled);
 		AppHelpers.toast('success', message);
 	});
 
