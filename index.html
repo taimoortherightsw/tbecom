@@ -229,8 +229,8 @@
 	$(document).on('click', '.ta__delete-btn', function () {
 		let _self = $(this);
 
-		let value = _self.data('value').toLowerCase();
-		let type = _self.data('type');
+		let value = _self.data('value');
+		let type = _self.data('type').toLowerCase();
 		let governorate = _self.data('governorate');
 
 		AppHelpers.fireDialog({
@@ -238,23 +238,12 @@
 			confirm: function () {
 				return new Promise((resolve, reject) => {
 					try {
-						console.log({type, value, governorate});
-
 						AppStorage.delete(type, value, governorate);
-
-						console.log({type, value, governorate});
-
 						_self.closest('.list-element').remove();
 
-						console.log({type, value, governorate});
-
-						if (type == 'governorate') $('span[data-areas-for="'+value+'"]').remove();
-						
-						console.log({type, value, governorate});
+						if (type == 'governorate') $('span[data-areas-for="' + value + '"]').remove();
 
 						AppHelpers.toast('success', AppHelpers.ucWords(type) + ' has been deleted successfully.');
-						
-						console.log({type, value, governorate});
 						resolve('success');
 					} catch (error) {
 						AppHelpers.toast('error', error);
