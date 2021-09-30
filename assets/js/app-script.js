@@ -1,7 +1,7 @@
 EcwidApp.init({
 	app_id: "custom-app-63750040-1",
 	autoloadedflag: true,
-	autoheight: true
+	autoheight: false
 });
 
 EcwidApp.getAppStorage('installed', function (config) {
@@ -44,7 +44,6 @@ let AppStorage = {
 	},
 	load: function () {
 		let _self = this;
-		_self.reset();
 		EcwidApp.getAppStorage('public', function (config) {
 			config = JSON.parse(config);
 			console.log(config);
@@ -54,12 +53,12 @@ let AppStorage = {
 
 			let governorate;
 
-			for (let key in config.governorates) {
-				governorate = config.governorates[key];
+			for (key in config.governorates) {
+				governorate = config.governorate[key];
 				_self.createGovernorateUI(governorate);
 
-				for (let key2 in config.areas[governorate]) {
-					_self.createAreaUI(governorate, config.areas[governorate][key2]);
+				for (key2 in config.areas[governorate]) {
+					_self.createAreaUI(governorate, config.areas[governorate]);
 				}
 			}
 		});

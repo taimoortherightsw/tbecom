@@ -165,9 +165,7 @@
 
 	// AppStorage.reset();
 
-	setTimeout(function() {
-		AppStorage.load();
-	}, 20000);
+	AppStorage.load();
 
 	$(document).on('change', '#ta__app-status', function () {
 		let _self = $(this);
