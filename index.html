@@ -172,14 +172,14 @@
 		let message;
 
 		if (isEnabled) {
-			_self.attr('checked', 'checked');
-			message = 'Application has been enabled.';
-		} else {
 			_self.removeAttr('checked');
 			message = 'Application has been disabled.';
+		} else {
+			_self.attr('checked', 'checked');
+			message = 'Application has been enabled.';
 		}
 
-		AppStorage.save('status', isEnabled);
+		AppStorage.save('status', !isEnabled);
 		AppHelpers.toast('success', message);
 	});
 
