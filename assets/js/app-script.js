@@ -46,8 +46,8 @@ let AppStorage = {
 			config = JSON.parse(config);
 			console.log(config);
 
-			if (config.enabled) $('#app-status').attr('checked', 'checked');
-			else $('#app-status').removeAttr('checked');
+			if (config.enabled) $('#ta__app-status').attr('checked', 'checked');
+			else $('#ta__app-status').removeAttr('checked');
 
 			for (key in config.governorates) {
 				_self.createUI('governorate', config.governorates[key]);
@@ -102,7 +102,7 @@ let AppStorage = {
 						</div>
 						<div class="list-element__actions">
 							<label class="checkbox" style="padding-right: 90px; margin-top: 4px;">
-								<input type="checkbox" class="tb-data-switch" data-type="governorate" data-value="${data}">
+								<input type="checkbox" class="ta__data-switch" data-type="governorate" data-value="${data}">
 								<div data-on="enabled" data-off="disabled"><div></div></div>
 							</label>
 							<div class="list-element__buttons-set">

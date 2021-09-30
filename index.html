@@ -201,7 +201,7 @@
 						if (value) {
 							AppStorage.save(type, value);
 
-							AppHelpers.toast('success', ucWords(type) + ' has been added successfully.');
+							AppHelpers.toast('success', AppHelpers.ucWords(type) + ' has been added successfully.');
 							resolve('success');
 						} else {
 							AppHelpers.toast('error', 'Please, provide a value.');
