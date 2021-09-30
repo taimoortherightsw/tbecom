@@ -81,7 +81,7 @@ let AppStorage = {
 
 			if (type == 'area' && governorate !== null) {
 				config.areas[governorate].push(value);
-				_self.createAreaUI(value);
+				_self.createAreaUI(governorate, value);
 			}
 
 			EcwidApp.setAppPublicConfig(JSON.stringify(config), function (updatedConfig) {
