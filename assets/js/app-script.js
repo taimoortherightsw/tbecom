@@ -89,13 +89,20 @@ let AppStorage = {
 			});
 		});
 	},
-	delete: function (type, value) {
+	delete: function (type, value, governorate = null) {
 		EcwidApp.getAppStorage('public', function (config) {
 			config = JSON.parse(config);
 
 			if (type == 'governorate') {
 				let index = config.governorates.indexOf(value);
 				if (index > -1) config.governorates.splice(index, 1);
+
+				delete config.areas[value];
+			}
+
+			if (type == 'area' && governorate !== null) {
+				let index = config.areas[governorate].indexOf(value);
+				if (index > -1) config.areas[governorate].splice(index, 1);
 			}
 
 			EcwidApp.setAppPublicConfig(JSON.stringify(config), function (updatedConfig) {
