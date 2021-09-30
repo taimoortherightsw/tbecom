@@ -57,7 +57,7 @@ let AppStorage = {
 				governorate = config.governorates[key];
 				_self.createGovernorateUI(governorate);
 
-				for (key2 in config.areas[city]) {
+				for (key2 in config.areas[governorate]) {
 					_self.createAreaUI(governorate, config.areas[governorate]);
 				}
 			}
