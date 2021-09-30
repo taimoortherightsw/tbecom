@@ -167,16 +167,16 @@
 
 	$(document).on('change', '#ta__app-status', function () {
 		let _self = $(this);
-		let isEnabled = _self.attr('checked') ? true : false;
+		let isEnabled = _self.attr('checked') == 'checked' ? true : false;
 
 		let message;
 
 		if (isEnabled) {
-			_self.removeAttr('checked');
-			message = 'Application has been disabled.';
-		} else {
 			_self.attr('checked', 'checked');
 			message = 'Application has been enabled.';
+		} else {
+			_self.removeAttr('checked');
+			message = 'Application has been disabled.';
 		}
 
 		AppStorage.save('status', isEnabled);
