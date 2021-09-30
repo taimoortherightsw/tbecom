@@ -63,7 +63,7 @@ let AppStorage = {
 			}
 		});
 	},
-	save: function (type, value) {
+	save: function (type, value, governorate = null) {
 		let _self = this;
 		EcwidApp.getAppStorage('public', function (config) {
 			config = JSON.parse(config);
@@ -75,7 +75,13 @@ let AppStorage = {
 
 			if (type == 'governorate') {
 				config.governorates.push(value);
-				_self.createUI(type, value);
+				config.areas[value] = [];
+				_self.createGovernorateUI(value);
+			}
+
+			if (type == 'area' && governorate !== null) {
+				config.areas[governorate].push(value);
+				_self.createAreaUI(value);
 			}
 
 			EcwidApp.setAppPublicConfig(JSON.stringify(config), function (updatedConfig) {
