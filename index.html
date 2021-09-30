@@ -238,12 +238,23 @@
 			confirm: function () {
 				return new Promise((resolve, reject) => {
 					try {
+						console.log({type, value, governorate});
+
 						AppStorage.delete(type, value, governorate);
+
+						console.log({type, value, governorate});
+
 						_self.closest('.list-element').remove();
 
+						console.log({type, value, governorate});
+
 						if (type == 'governorate') $('span[data-areas-for="'+value+'"]').remove();
+						
+						console.log({type, value, governorate});
 
 						AppHelpers.toast('success', AppHelpers.ucWords(type) + ' has been deleted successfully.');
+						
+						console.log({type, value, governorate});
 						resolve('success');
 					} catch (error) {
 						AppHelpers.toast('error', error);
