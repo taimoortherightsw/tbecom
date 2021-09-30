@@ -30,6 +30,7 @@ EcwidApp.getAppStorage('installed', function (config) {
 	}
 });
 
+/*
 let AppStorage = {
 	reset: function () {
 		var config = {
@@ -203,3 +204,4 @@ let AppStorage = {
 		$('span[data-areas-for="' + governorate +'"]').append(areaTemplate);
 	}
 }
+*/
