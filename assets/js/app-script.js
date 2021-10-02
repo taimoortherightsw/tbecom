@@ -122,10 +122,6 @@ let AppStorage = {
 						</div>
 					</div>
 					<div class="list-element__actions">
-						<label class="checkbox" style="padding-right: 90px; margin-top: 4px;">
-							<input type="checkbox" class="ta__data-switch" data-type="governorate" data-value="${governorate}">
-							<div data-on="enabled" data-off="disabled"><div></div></div>
-						</label>
 						<div class="list-element__buttons-set">
 							<div class="list-element__button-wrapper">
 								<button type="button" class="btn btn-default btn-small ta__delete-btn" data-type="governorate" data-value="${governorate}">
@@ -184,10 +180,6 @@ let AppStorage = {
 						</div>
 					</div>
 					<div class="list-element__actions">
-						<label class="checkbox" style="padding-right: 90px; margin-top: 4px;">
-							<input type="checkbox" class="ta__data-switch" data-type="area" data-value="${area}">
-							<div data-on="enabled" data-off="disabled"><div></div></div>
-						</label>
 						<div class="list-element__buttons-set">
 							<div class="list-element__button-wrapper">
 								<button type="button" class="btn btn-default btn-small ta__delete-btn" data-type="area" data-value="${area}" data-governorate="${governorate}">
