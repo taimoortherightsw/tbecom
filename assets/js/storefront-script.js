@@ -17,7 +17,7 @@ $(function () {
 			let appConfig = JSON.parse(Ecwid.getAppPublicConfig(appId));
 			if (!appConfig.enabled) return;
 
-			if ($('#ec-country').val() == 'KW') {
+			if ($('#ec-country').val() == 'KW' || typeof $('#ec-country').val() == 'undefined') {
 				CheckoutFields.init();
 			}
 
