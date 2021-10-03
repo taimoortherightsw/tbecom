@@ -158,6 +158,7 @@ let CheckoutFields = {
 		let streetNo = dom.find('.ec-form__row--streetNo input').val();
 		let avenue = dom.find('.ec-form__row--avenue input').val();
 		let area = dom.find('.ec-form__row--area select').val();
+		let additionalDirections = dom.find('.ec-form__cell--additionalDirections input').val();
 
 		if (block) {
 			let target = block.substring(0, 5);
@@ -197,6 +198,17 @@ let CheckoutFields = {
 		let el = document.querySelector('.ec-form__cell--state select');
 		el.value = this.getState();
 		el.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
+
+		if (additionalDirections) {
+			Ecwid.Cart.setOrderComments('Leave order at the door.',
+				function () {
+					console.log('Successfully set order comments.')
+				},
+				function () {
+					console.log('Error setting order comments.');
+				}
+			);
+		}
 
 		console.log('%cCheckout fields hydrated successfully', 'color: green');
 	},
