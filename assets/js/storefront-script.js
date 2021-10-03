@@ -159,7 +159,28 @@ let CheckoutFields = {
 		let avenue = dom.find('.ec-form__row--avenue input').val();
 		let area = dom.find('.ec-form__row--area select').val();
 
-		let address = avenue ? `${block}, ${streetNo}, ${avenue}` : `${block}, ${streetNo}`;
+		if (block) {
+			let target = block.substring(0, 5);
+			if (target.toLowerCase() == 'block') {
+				block = block.replace(target, '').trim();
+			}
+		}
+
+		if (streetNo) {
+			let target = streetNo.substring(0, 6);
+			if (target.toLowerCase() == 'street') {
+				streetNo = streetNo.replace(target, '').trim();
+			}
+		}
+
+		if (avenue) {
+			let target = avenue.substring(0, 6);
+			if (target.toLowerCase() == 'avenue') {
+				avenue = avenue.replace(target, '').trim();
+			}
+		}
+
+		let address = avenue ? `Block ${block}, Street ${streetNo}, Avenue ${avenue}` : `Block ${block}, Street ${streetNo}`;
 
 		Ecwid.Cart.setAddress({
 			countryName: dom.find('[name="country-list"]').find("option:selected").text(),
