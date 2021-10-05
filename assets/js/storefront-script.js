@@ -1,4 +1,4 @@
-let appId = 'custom-app-63750040-1';
+let appId = 'tbecom-custom-address';
 let host = 'https://taimoortherightsw.github.io/tbecom';
 
 (function () {
