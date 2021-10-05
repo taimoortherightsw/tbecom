@@ -1,5 +1,5 @@
 EcwidApp.init({
-	app_id: "custom-app-63750040-1",
+	app_id: 'tbecom-custom-address',
 	autoloadedflag: true,
 	autoheight: true
 });
