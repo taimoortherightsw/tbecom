@@ -17,14 +17,11 @@ $(function () {
 			let appConfig = JSON.parse(Ecwid.getAppPublicConfig(appId));
 			if (!appConfig.enabled) return;
 
-			Ecwid.Cart.setOrderComments('',
-				function () {},
-				function () {
-					CheckoutFields.enableOrderComments();
-				}
-			);
-
 			if ($('#ec-country').val() == 'KW' || typeof $('#ec-country').val() == 'undefined') {
+				Ecwid.Cart.setOrderComments('',
+					function () {},
+					function () { CheckoutFields.enableOrderComments(); } // on error
+				);
 				CheckoutFields.init();
 			}
 
@@ -68,6 +65,7 @@ let CheckoutFields = {
 
 		$(document).off('change', '.ec-form__row--governorate select');
 		$(document).off('change', '.ec-form__row--area select');
+		$(document).off('change', '.ec-form__cell--additionalDirections input');
 		$(document).off('mousedown', '.ec-form__row--continue');
 	},
 	create: function () {
