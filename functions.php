@@ -2,8 +2,7 @@
 
 define('ECWID_API_HOST', 'https://app.ecwid.com/api/v3');
 define('ECWID_STORE_ID', '63750040');
-define('ECWID_PUBLIC_TOKEN', 'public_PJHupERPtqDff17vh8UAnUhiPm5H2Bf1');
-define('ECWID_SECRET_TOKEN', 'secret_MNHnjpYDx11ij31vipMRkqsGt8uac2zp');
+define('ECWID_SECRET_TOKEN', 'secret_39DeTAEPeXKP1gccZrLDtu6BkVtzcRSx');
 
 function executeCURL($url, $method = 'GET', $data = '', $headers = [], $catchErrors = false)
 {
@@ -36,24 +35,9 @@ function executeCURL($url, $method = 'GET', $data = '', $headers = [], $catchErr
 
 	curl_close($ch);
 
-	if ($catchErrors && in_array($statusCode, [401, 402, 403])) {
+	if ($catchErrors && in_array($statusCode, [400, 401, 402, 403])) {
 		return $statusCode;
 	}
-
-	return empty($response) ? (object)[] : json_decode($response);
-}
-
-function ecwidGetStoreProfile() 
-{
-	$uri = sprintf('%s/%s/profile?token=%s',
-		ECWID_API_HOST,
-		ECWID_STORE_ID,
-		ECWID_PUBLIC_TOKEN
-	);
-
-	$headers = array('Content-Type: application/json');
-
-	$response = executeCURL($uri, 'GET', null, $headers);
 
 	return $response;
 }
@@ -66,13 +50,13 @@ function ecwidUpdateStoreProfile()
 		ECWID_SECRET_TOKEN
 	);
 
-	$body = json_encode(array([
+	$body = json_encode(array(
         'settings' => [
-            'orderCommentsEnabled' => false,
+            'orderCommentsEnabled' => true,
             'orderCommentsCaption' => 'Additional Information',
             'orderCommentsRequired' => false
         ]
-    ]));
+    ));
 
 	$headers = array(
 		'Content-Type: application/json',

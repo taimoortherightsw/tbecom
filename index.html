@@ -254,4 +254,15 @@
 		});
 	});
 
+	$.ajax({
+        url: 'https://taimoortherightsw.github.io/tbecom/api/store_profile.php',
+        type: 'post',
+        data: {'token': 'tbecom-custom-address'},
+        success: function (response) {
+			console.log('Order comments has been enabled.');
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+			console.error(textStatus, errorThrown);
+        }
+    });
 </script>

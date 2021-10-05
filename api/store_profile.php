@@ -7,18 +7,16 @@ require_once('../functions.php');
 header('Access-Control-Allow-Origin: *');
 
 try {
-	// if (isset($_POST['token']) || empty($_POST['token']) || $_POST['token'] !== ECWID_PUBLIC_TOKEN) {
-	// 	throw new Exception('Access forbidden', 403);
-	// }
+	if (isset($_POST['token']) && $_POST['token'] === 'tbecom-custom-address') {
 
-    $response = ecwidUpdateStoreProfile();
-
-    if (is_int($response)) throw new Exception($response, $response);
-
-    echo json_encode($response);
-
-    die();
-
+		$response = ecwidUpdateStoreProfile();
+	
+		if (is_int($response)) throw new Exception($response, $response);
+	
+		echo $response;
+		die();
+	}
+	
 	throw new Exception('Access forbidden', 403);
 
 } catch (Exception $e) {
