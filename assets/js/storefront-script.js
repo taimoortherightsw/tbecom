@@ -17,6 +17,13 @@ $(function () {
 			let appConfig = JSON.parse(Ecwid.getAppPublicConfig(appId));
 			if (!appConfig.enabled) return;
 
+			Ecwid.Cart.setOrderComments('',
+				function () {},
+				function () {
+					CheckoutFields.enableOrderComments();
+				}
+			);
+
 			if ($('#ec-country').val() == 'KW' || typeof $('#ec-country').val() == 'undefined') {
 				CheckoutFields.init();
 			}
@@ -44,6 +51,10 @@ let CheckoutFields = {
 		$(document).on('change', '.ec-form__row--area select', function () {
 			CheckoutFields.update('area', $(this).val());
 		});
+
+		$(document).on('change', '.ec-form__cell--additionalDirections input', function () {
+			CheckoutFields.setOrderComments($(this).val());
+		})
 
 		$(document).on('mousedown', '.ec-form__row--continue', function () {
 			CheckoutFields.hydrate();
@@ -199,16 +210,7 @@ let CheckoutFields = {
 		el.value = this.getState();
 		el.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
 
-		if (additionalDirections) {
-			Ecwid.Cart.setOrderComments('Leave order at the door.',
-				function () {
-					console.log('Successfully set order comments.')
-				},
-				function () {
-					console.log('Error setting order comments.');
-				}
-			);
-		}
+		if (additionalDirections) this.setOrderComments(additionalDirections);
 
 		console.log('%cCheckout fields hydrated successfully', 'color: green');
 	},
@@ -254,5 +256,29 @@ let CheckoutFields = {
 		}
 
 		return 'KW-AH';
+	},
+	enableOrderComments: function () {
+		$.ajax({
+			url: `${host}/api/store_profile.php`,
+			type: 'post',
+			data: {'token': 'tbecom-custom-address'},
+			success: function (response) {
+				console.log('Order comments has been enabled.');
+				window.location.reload();
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				console.error(textStatus, errorThrown);
+			}
+		});
+	},
+	setOrderComments: function (comments) {
+		Ecwid.Cart.setOrderComments(comments,
+			function () {
+				console.log('Successfully set order comments.')
+			},
+			function () {
+				console.log('Error setting order comments.');
+			}
+		);
 	}
 }
