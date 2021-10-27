@@ -1,13 +1,15 @@
-let tbecomAddressApp = {
-	id: 'tbecom-custom-address',
-	host: 'https://taimoortherightsw.github.io/tbecom'
-};
+if (typeof tbecomAddressApp === undefined) {
+	let tbecomAddressApp = {
+		id: 'tbecom-custom-address',
+		host: 'https://taimoortherightsw.github.io/tbecom'
+	};
+}
 
 (function () {
 	if (typeof jQuery == 'undefined') {
 		let script = document.createElement('script');
 		script.type = 'text/javascript';
-		script.src = tbecomAddressApp.host + '/assets/js/jquery-3.6.0.min.js';
+		script.src = `${tbecomAddressApp.host}/assets/js/jquery-3.6.0.min.js`;
 		document.getElementsByTagName('head')[0].appendChild(script);
 	}
 })();
