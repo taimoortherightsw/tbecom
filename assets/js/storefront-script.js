@@ -35,7 +35,7 @@ $(function () {
 	});
 });
 
-let CheckoutFields = {
+var CheckoutFields = {
 	config: JSON.parse(Ecwid.getAppPublicConfig(tbecomAppId)),
 	init: function () {
 		this.hide();
