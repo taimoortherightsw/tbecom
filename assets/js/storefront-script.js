@@ -1,7 +1,7 @@
 let tbecomAddressApp = {
 	id: 'tbecom-custom-address',
 	host: 'https://taimoortherightsw.github.io/tbecom'
-}
+};
 
 (function () {
 	if (typeof jQuery == 'undefined') {
@@ -281,4 +281,4 @@ let CheckoutFields = {
 			}
 		);
 	}
-}
+};
