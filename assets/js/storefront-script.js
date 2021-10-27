@@ -1,4 +1,4 @@
-let tbecom {
+let tbecom = {
 	appId: 'tbecom-custom-address',
 	host: 'https://taimoortherightsw.github.io/tbecom'
 }
