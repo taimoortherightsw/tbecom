@@ -1,5 +1,5 @@
-let tbecom = {
-	appId: 'tbecom-custom-address',
+let tbecomAddressApp = {
+	id: 'tbecom-custom-address',
 	host: 'https://taimoortherightsw.github.io/tbecom'
 }
 
@@ -7,7 +7,7 @@ let tbecom = {
 	if (typeof jQuery == 'undefined') {
 		let script = document.createElement('script');
 		script.type = 'text/javascript';
-		script.src = tbecom.host + '/assets/js/jquery-3.6.0.min.js';
+		script.src = tbecomAddressApp.host + '/assets/js/jquery-3.6.0.min.js';
 		document.getElementsByTagName('head')[0].appendChild(script);
 	}
 })();
@@ -16,7 +16,7 @@ $(function () {
 	Ecwid.OnPageLoaded.add(function (page) {
 		if (page.type == 'CHECKOUT_ADDRESS') {
 
-			let appConfig = JSON.parse(Ecwid.getAppPublicConfig(tbecom.appId));
+			let appConfig = JSON.parse(Ecwid.getAppPublicConfig(tbecomAddressApp.id));
 			if (!appConfig.enabled) return;
 
 			if ($('#ec-country').val() == 'KW' || typeof $('#ec-country').val() == 'undefined') {
@@ -38,7 +38,7 @@ $(function () {
 });
 
 let CheckoutFields = {
-	config: JSON.parse(Ecwid.getAppPublicConfig(tbecom.appId)),
+	config: JSON.parse(Ecwid.getAppPublicConfig(tbecomAddressApp.id)),
 	init: function () {
 		this.hide();
 		this.create();
@@ -259,7 +259,7 @@ let CheckoutFields = {
 	},
 	enableOrderComments: function () {
 		$.ajax({
-			url: `${tbecom.host}/api/store_profile.php`,
+			url: `${tbecomAddressApp.host}/api/store_profile.php`,
 			type: 'post',
 			data: {'token': 'tbecom-custom-address'},
 			success: function (response) {
