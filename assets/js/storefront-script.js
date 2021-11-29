@@ -284,27 +284,51 @@ var CheckoutFields = {
 	translate: function (delay = 0) {
 		setTimeout(() => {
 			$('.ec-form__row--governorate').find('.ec-form__title').html(function () {
-				return $(this).html().replace('Governorate', 'Governorate - محافظة');
+				let _self = $(this);
+			
+				if (_self.html().indexOf('محافظة') <= 0) {
+					return _self.html().replace('Governorate', 'Governorate - محافظة');
+				}
 			});
 
 			$('.ec-form__row--area').find('.ec-form__title').html(function () {
-				return $(this).html().replace('Area', 'Area - منطقة');
+				let _self = $(this);
+			
+				if (_self.html().indexOf('منطقة') <= 0) {
+					return _self.html().replace('Area', 'Area - منطقة');
+				}
 			});
 
 			$('.ec-form__row--block').find('.ec-form__title').html(function () {
-				return $(this).html().replace('Block', 'Block - قطعه');
+				let _self = $(this);
+			
+				if (_self.html().indexOf('قطعه') <= 0) {
+					return _self.html().replace('Block', 'Block - قطعه');
+				}
 			});
 
 			$('.ec-form__row--streetNo').find('.ec-form__title').html(function () {
-				return $(this).html().replace('Street', 'Street - شارع');
+				let _self = $(this);
+			
+				if (_self.html().indexOf('شارع') <= 0) {
+					return _self.html().replace('Street', 'Street - شارع');
+				}
 			});
 
 			$('.ec-form__row--avenue').find('.ec-form__title').html(function () {
-				return $(this).html().replace('Avenue (optional)', 'Avenue (optional) - جاده (اختياري)');
+				let _self = $(this);
+			
+				if (_self.html().indexOf('جاده') <= 0) {
+					return _self.html().replace('Avenue (optional)', 'Avenue (optional) - جاده (اختياري)');
+				}
 			});
 
 			$('.ec-form__row--additionalDirections').find('.ec-form__title').html(function () {
-				return $(this).html().replace('Additional Directions (optional)', 'Additional Directions (optional) - اتجاهات إضافية (اختياري)');
+				let _self = $(this);
+			
+				if (_self.html().indexOf('اتجاهات') <= 0) {
+					return _self.html().replace('Additional Directions (optional)', 'Additional Directions (optional) - اتجاهات إضافية (اختياري)');
+				}
 			});
 		}, delay);
 	}
