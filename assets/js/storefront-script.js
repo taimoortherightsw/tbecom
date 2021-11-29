@@ -38,23 +38,25 @@ $(function () {
 var CheckoutFields = {
 	config: JSON.parse(Ecwid.getAppPublicConfig(tbecomAppId)),
 	init: function () {
-		this.hide();
-		this.create();
+		let _self = this;
+
+		_self.hide();
+		_self.create();
 
 		$(document).on('change', '.ec-form__row--governorate select', function () {
-			CheckoutFields.update('governorate', $(this).val());
+			_self.update('governorate', $(this).val());
 		});
 
 		$(document).on('change', '.ec-form__row--area select', function () {
-			CheckoutFields.update('area', $(this).val());
+			_self.update('area', $(this).val());
 		});
 
 		$(document).on('change', '.ec-form__cell--additionalDirections input', function () {
-			CheckoutFields.setOrderComments($(this).val());
+			_self.setOrderComments($(this).val());
 		})
 
 		$(document).on('mousedown', '.ec-form__row--continue', function () {
-			CheckoutFields.hydrate();
+			_self.hydrate();
 		});
 	},
 	destroy: function () {
@@ -82,7 +84,7 @@ var CheckoutFields = {
 		ec.order.extraFields = ec.order.extraFields || {};
 
 		ec.order.extraFields.governorate = {
-			title: 'Governorate',
+			title: 'Governorate - محافظة',
 			textPlaceholder: 'Select a governorate',
 			type: 'select',
 			selectOptions: governorates,
@@ -94,7 +96,7 @@ var CheckoutFields = {
 		selectedGovernorate = selectedGovernorate ? selectedGovernorate : governorates[0];
 
 		ec.order.extraFields.area = {
-			title: 'Area',
+			title: 'Area - منطقة',
 			textPlaceholder: 'Select an area',
 			type: 'select',
 			selectOptions: this.config.areas[selectedGovernorate],
@@ -103,7 +105,7 @@ var CheckoutFields = {
 		};
 
 		ec.order.extraFields.block = {
-			title: 'Block',
+			title: 'Block - قطعه',
 			textPlaceholder: 'Specify the block',
 			type: 'text',
 			required: true,
@@ -111,29 +113,34 @@ var CheckoutFields = {
 		};
 
 		ec.order.extraFields.streetNo = {
-			title: 'Street',
+			title: 'Street - شارع',
 			textPlaceholder: 'Provide street number',
 			required: true,
 			checkoutDisplaySection: 'shipping_address',
 		};
 
+		ec.order.extraFields.house = {
+			title: 'House - منزل',
+			textPlaceholder: 'Provide house number',
+			required: true,
+			checkoutDisplaySection: 'shipping_address',
+		};
+
 		ec.order.extraFields.avenue = {
-			title: 'Avenue (optional)',
+			title: 'Avenue (optional) - جاده (اختياري)',
 			textPlaceholder: 'Specify the avenue',
 			required: false,
 			checkoutDisplaySection: 'shipping_address',
 		};
 
 		ec.order.extraFields.additionalDirections = {
-			title: 'Additional Directions (optional)',
+			title: 'Additional Directions (optional) - اتجاهات إضافية (اختياري)',
 			textPlaceholder: 'Provide additional directions for the delivery',
 			required: false,
 			checkoutDisplaySection: 'shipping_address',
 		};
 
 		Ecwid.refreshConfig();
-
-		this.translate(500);
 	},
 	update: function (field, value) {
 		if (!value) return;
@@ -167,6 +174,7 @@ var CheckoutFields = {
 
 		let block = dom.find('.ec-form__row--block input').val();
 		let streetNo = dom.find('.ec-form__row--streetNo input').val();
+		let house = dom.find('.ec-form__row--house input').val();
 		let avenue = dom.find('.ec-form__row--avenue input').val();
 		let area = dom.find('.ec-form__row--area select').val();
 		let additionalDirections = dom.find('.ec-form__cell--additionalDirections input').val();
@@ -185,6 +193,13 @@ var CheckoutFields = {
 			}
 		}
 
+		if (house) {
+			let target = house.substring(0, 5);
+			if (target.toLowerCase() == 'house') {
+				house = house.replace(target, '').trim();
+			}
+		}
+
 		if (avenue) {
 			let target = avenue.substring(0, 6);
 			if (target.toLowerCase() == 'avenue') {
@@ -192,7 +207,9 @@ var CheckoutFields = {
 			}
 		}
 
-		let address = avenue ? `Block ${block}, Street ${streetNo}, Avenue ${avenue}` : `Block ${block}, Street ${streetNo}`;
+		let address = avenue
+			? `Block ${block}, Street ${streetNo}, House ${house}, Avenue ${avenue}`
+			: `Block ${block}, Street ${streetNo}, House ${house}`;
 
 		Ecwid.Cart.setAddress({
 			countryName: dom.find('[name="country-list"]').find("option:selected").text(),
@@ -280,56 +297,5 @@ var CheckoutFields = {
 				console.log('Error setting order comments.');
 			}
 		);
-	},
-	translate: function (delay = 0) {
-		setTimeout(() => {
-			$('.ec-form__row--governorate').find('.ec-form__title').html(function () {
-				let _self = $(this);
-			
-				if (_self.html().indexOf('محافظة') <= 0) {
-					return _self.html().replace('Governorate', 'Governorate - محافظة');
-				}
-			});
-
-			$('.ec-form__row--area').find('.ec-form__title').html(function () {
-				let _self = $(this);
-			
-				if (_self.html().indexOf('منطقة') <= 0) {
-					return _self.html().replace('Area', 'Area - منطقة');
-				}
-			});
-
-			$('.ec-form__row--block').find('.ec-form__title').html(function () {
-				let _self = $(this);
-			
-				if (_self.html().indexOf('قطعه') <= 0) {
-					return _self.html().replace('Block', 'Block - قطعه');
-				}
-			});
-
-			$('.ec-form__row--streetNo').find('.ec-form__title').html(function () {
-				let _self = $(this);
-			
-				if (_self.html().indexOf('شارع') <= 0) {
-					return _self.html().replace('Street', 'Street - شارع');
-				}
-			});
-
-			$('.ec-form__row--avenue').find('.ec-form__title').html(function () {
-				let _self = $(this);
-			
-				if (_self.html().indexOf('جاده') <= 0) {
-					return _self.html().replace('Avenue (optional)', 'Avenue (optional) - جاده (اختياري)');
-				}
-			});
-
-			$('.ec-form__row--additionalDirections').find('.ec-form__title').html(function () {
-				let _self = $(this);
-			
-				if (_self.html().indexOf('اتجاهات') <= 0) {
-					return _self.html().replace('Additional Directions (optional)', 'Additional Directions (optional) - اتجاهات إضافية (اختياري)');
-				}
-			});
-		}, delay);
 	}
 }
