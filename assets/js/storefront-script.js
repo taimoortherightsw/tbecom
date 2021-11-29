@@ -133,7 +133,7 @@ var CheckoutFields = {
 
 		Ecwid.refreshConfig();
 
-		this.translate();
+		this.translate(500);
 	},
 	update: function (field, value) {
 		if (!value) return;
@@ -281,29 +281,31 @@ var CheckoutFields = {
 			}
 		);
 	},
-	translate: function () {
-		$('.ec-form__row--governorate').find('.ec-form__title').html(function() {
-			return $(this).html().replace('Governorate', 'Governorate - محافظة');
-		});
+	translate: function (delay = 0) {
+		setTimeout(() => {
+			$('.ec-form__row--governorate').find('.ec-form__title').html(function () {
+				return $(this).html().replace('Governorate', 'Governorate - محافظة');
+			});
 
-		$('.ec-form__row--area').find('.ec-form__title').html(function() {
-			return $(this).html().replace('Area', 'Area - منطقة');
-		});
+			$('.ec-form__row--area').find('.ec-form__title').html(function () {
+				return $(this).html().replace('Area', 'Area - منطقة');
+			});
 
-		$('.ec-form__row--block').find('.ec-form__title').html(function() {
-			return $(this).html().replace('Block', 'Block - قطعه');
-		});
+			$('.ec-form__row--block').find('.ec-form__title').html(function () {
+				return $(this).html().replace('Block', 'Block - قطعه');
+			});
 
-		$('.ec-form__row--streetNo').find('.ec-form__title').html(function() {
-			return $(this).html().replace('Street', 'Street - شارع');
-		});
+			$('.ec-form__row--streetNo').find('.ec-form__title').html(function () {
+				return $(this).html().replace('Street', 'Street - شارع');
+			});
 
-		$('.ec-form__row--avenue').find('.ec-form__title').html(function() {
-			return $(this).html().replace('Avenue (optional)', 'Avenue (optional) - جاده (اختياري)');
-		});
+			$('.ec-form__row--avenue').find('.ec-form__title').html(function () {
+				return $(this).html().replace('Avenue (optional)', 'Avenue (optional) - جاده (اختياري)');
+			});
 
-		$('.ec-form__row--additionalDirections').find('.ec-form__title').html(function() {
-			return $(this).html().replace('Additional Directions (optional)', 'Additional Directions (optional) - اتجاهات إضافية (اختياري)');
-		});
+			$('.ec-form__row--additionalDirections').find('.ec-form__title').html(function () {
+				return $(this).html().replace('Additional Directions (optional)', 'Additional Directions (optional) - اتجاهات إضافية (اختياري)');
+			});
+		}, delay);
 	}
 }
