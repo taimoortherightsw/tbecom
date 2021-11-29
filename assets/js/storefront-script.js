@@ -19,7 +19,7 @@ $(function () {
 
 			if ($('#ec-country').val() == 'KW' || typeof $('#ec-country').val() == 'undefined') {
 				Ecwid.Cart.setOrderComments('',
-					function () {},
+					function () { },
 					function () { CheckoutFields.enableOrderComments(); } // on error
 				);
 				CheckoutFields.init();
@@ -132,6 +132,8 @@ var CheckoutFields = {
 		};
 
 		Ecwid.refreshConfig();
+
+		this.translate();
 	},
 	update: function (field, value) {
 		if (!value) return;
@@ -259,12 +261,12 @@ var CheckoutFields = {
 		$.ajax({
 			url: `${tbecomHost}/api/store_profile.php`,
 			type: 'post',
-			data: {'token': 'tbecom-custom-address'},
+			data: { 'token': 'tbecom-custom-address' },
 			success: function (response) {
 				console.log('Order comments has been enabled.');
 				window.location.reload();
 			},
-			error: function(jqXHR, textStatus, errorThrown) {
+			error: function (jqXHR, textStatus, errorThrown) {
 				console.error(textStatus, errorThrown);
 			}
 		});
@@ -278,5 +280,30 @@ var CheckoutFields = {
 				console.log('Error setting order comments.');
 			}
 		);
+	},
+	translate: function () {
+		$('.ec-form__row--governorate').find('.ec-form__title').html(function() {
+			return $(this).html().replace('Governorate', 'Governorate - محافظة');
+		});
+
+		$('.ec-form__row--area').find('.ec-form__title').html(function() {
+			return $(this).html().replace('Area', 'Area - منطقة');
+		});
+
+		$('.ec-form__row--block').find('.ec-form__title').html(function() {
+			return $(this).html().replace('Block', 'Block - قطعه');
+		});
+
+		$('.ec-form__row--streetNo').find('.ec-form__title').html(function() {
+			return $(this).html().replace('Street', 'Street - شارع');
+		});
+
+		$('.ec-form__row--avenue').find('.ec-form__title').html(function() {
+			return $(this).html().replace('Avenue (optional)', 'Avenue (optional) - جاده (اختياري)');
+		});
+
+		$('.ec-form__row--additionalDirections').find('.ec-form__title').html(function() {
+			return $(this).html().replace('Additional Directions (optional)', 'Additional Directions (optional) - اتجاهات إضافية (اختياري)');
+		});
 	}
 }

@@ -38,7 +38,7 @@ let AppStorage = {
 			areas: {},
 		};
 
-		EcwidApp.setAppPublicConfig(JSON.stringify(config), function(updatedConfig){
+		EcwidApp.setAppPublicConfig(JSON.stringify(config), function (updatedConfig) {
 			console.log(updatedConfig);
 		});
 	},
@@ -46,7 +46,6 @@ let AppStorage = {
 		let _self = this;
 		EcwidApp.getAppStorage('public', function (config) {
 			config = JSON.parse(config);
-			console.log(config);
 
 			if (config.enabled) $('#ta__app-status').attr('checked', 'checked');
 			else $('#ta__app-status').removeAttr('checked');
@@ -67,11 +66,8 @@ let AppStorage = {
 		let _self = this;
 		EcwidApp.getAppStorage('public', function (config) {
 			config = JSON.parse(config);
-			console.log(config);
 
 			if (type == 'status') config.enabled = value;
-
-			console.log(type, value, config);
 
 			if (type == 'governorate') {
 				config.governorates.push(value);
@@ -165,7 +161,7 @@ let AppStorage = {
 				</div>
 			</span>
 		`;
-	
+
 		$('#ta__areas-container').append(areaGovernorateTemplate);
 	},
 	createAreaUI: function (governorate, area) {
@@ -192,6 +188,6 @@ let AppStorage = {
 			</div>
 		`;
 
-		$('#ta__areas-container').find('span[data-areas-for="' + governorate +'"]').append(areaTemplate);
+		$('#ta__areas-container').find('span[data-areas-for="' + governorate + '"]').append(areaTemplate);
 	}
 }
